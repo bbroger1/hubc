@@ -1,0 +1,17 @@
+hr {
+    width: 45%;
+}
+
+.or {
+    display: flex;
+    align-items: center;
+    color: #978F8F;
+}
+
+.remember {
+    align-items: flex-end;
+}
+
+.text-red {
+    color: #F15E61;
+}
