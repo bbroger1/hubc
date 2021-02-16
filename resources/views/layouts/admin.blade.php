@@ -24,6 +24,7 @@
 
     <!-- Custom Fonts -->
     <link href="{{ asset('assets/css/panel/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 
     @stack('custom-css')
 </head>

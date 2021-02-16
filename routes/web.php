@@ -20,12 +20,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/candidate/register', [App\Http\Controllers\Auth\RegisterCandidateController::class, 'candidate'])->name('candidate.register');
+Route::get('/candidate/register', 'Auth\RegisterCandidateController@candidate')->name('candidate.register');
 
-Route::post('/candidate/create', [App\Http\Controllers\Auth\RegisterCandidateController::class, 'create'])->name('candidate.create');
+Route::post('/candidate/create', 'Auth\RegisterCandidateController@create')->name('candidate.create');
 
-Route::get('/employer/register', [App\Http\Controllers\Auth\RegisterEmployerController::class, 'employer'])->name('employer.register');
+Route::get('/employer/register', 'Auth\RegisterEmployerController@employer')->name('employer.register');
 
-Route::post('/employer/create', [App\Http\Controllers\Auth\RegisterEmployerController::class, 'create'])->name('employer.create');
+Route::post('/employer/create', 'Auth\RegisterEmployerController@create')->name('employer.create');
