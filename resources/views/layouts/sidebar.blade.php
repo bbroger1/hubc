@@ -33,6 +33,7 @@
             </ul>
         </li>
         <br />
+        <hr>
         <span class="sidebar-title">{{ __('Utilidades') }}</span>
         <li>
             <a href="#ferramentasSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -64,6 +65,7 @@
             </ul>
         </li>
         <br />
+        <hr>
         <span class="sidebar-title pt-3">{{ __('Componentes Extras') }}</span>
         <li>
             <a href="#outrosSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -98,7 +100,11 @@
 
     <ul class="list-unstyled CTAs">
         <li>
-            <a href="#" class="download"><i class="fas fa-sign-out-alt"></i> Sair</a>
+            <a href="{{ route('logout') }}" class="dropdown-item"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>{{ __('Sair') }}</span>
+            </a>
         </li>
     </ul>
 </nav>
