@@ -12,7 +12,7 @@
             </a>
             <ul class="collapse list-unstyled" id="painelSubmenu">
                 <li>
-                    <a href="{{ route('home') }}">
+                    <a href="{{ route('admin.home') }}">
                         <span class="sidebar-img">
                             <img class="img-default" src="{{ asset('images/ellipse_cinza.png') }}" alt="Elipse cinza">
                             <img class="img-hover" src="{{ asset('images/ellipse_vermelha.png') }}"
@@ -22,7 +22,7 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('home') }}">
+                    <a href="{{ route('admin.home') }}">
                         <span class="sidebar-img">
                             <img class="img-default" src="{{ asset('images/ellipse_cinza.png') }}" alt="Elipse cinza">
                             <img class="img-hover" src="{{ asset('images/ellipse_vermelha.png') }}"
@@ -42,7 +42,7 @@
             </a>
             <ul class="collapse list-unstyled" id="ferramentasSubmenu">
                 <li>
-                    <a href="{{ route('home') }}">
+                    <a href="{{ route('admin.home') }}">
                         <span class="sidebar-img">
                             <img class="img-default" src="{{ asset('images/ellipse_cinza.png') }}"
                                 alt="Elipse cinza">
@@ -53,7 +53,7 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('home') }}">
+                    <a href="{{ route('admin.home') }}">
                         <span class="sidebar-img">
                             <img class="img-default" src="{{ asset('images/ellipse_cinza.png') }}"
                                 alt="Elipse cinza">
@@ -74,7 +74,7 @@
             </a>
             <ul class="collapse list-unstyled" id="outrosSubmenu">
                 <li>
-                    <a href="{{ route('home') }}">
+                    <a href="{{ route('admin.home') }}">
                         <span class="sidebar-img">
                             <img class="img-default" src="{{ asset('images/ellipse_cinza.png') }}"
                                 alt="Elipse cinza">
@@ -85,7 +85,7 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('home') }}">
+                    <a href="{{ route('admin.home') }}">
                         <span class="sidebar-img">
                             <img class="img-default" src="{{ asset('images/ellipse_cinza.png') }}"
                                 alt="Elipse cinza">

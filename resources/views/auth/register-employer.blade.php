@@ -38,6 +38,17 @@
                         @enderror
                     </div>
 
+                    <label for="username">{{ __('Usuário*') }}</label>
+                    <div class="form-group row">
+                        <input id="username" type="text" class="form-control @error('username') is-invalid @enderror"
+                            name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
+                        @error('username')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+
                     <label for="email">{{ __('E-Mail*') }}</label>
                     <div class="form-group row">
 
@@ -53,8 +64,10 @@
 
                     <label for="representative_name">{{ __('Nome do representante*') }}</label>
                     <div class="form-group row">
-                        <input id="representative_name" type="text" class="form-control @error('representative_name') is-invalid @enderror" name="representative_name"
-                            value="{{ old('representative_name') }}" required autocomplete="representative_name" autofocus>
+                        <input id="representative_name" type="text"
+                            class="form-control @error('representative_name') is-invalid @enderror"
+                            name="representative_name" value="{{ old('representative_name') }}" required
+                            autocomplete="representative_name" autofocus>
                         @error('representative_name')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

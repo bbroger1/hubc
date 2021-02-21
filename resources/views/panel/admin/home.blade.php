@@ -6,11 +6,11 @@
 @section('content')
     <div class="wrapper">
         <!-- Navigation -->
-        @include('layouts.sidebar')
+        @include('panel.admin.sidebar')
 
         <div id="content">
-            @include('layouts.navbar')
-            @include('panel.content.admin')
+            @include('panel.navbar')
+            @include('panel.admin.content.admin')
         </div>
     </div>
 @endsection

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Employer;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('panel.home');
+        $type = Auth::user()->type;
+
+        if ($type != 2) {
+            return view('auth.login');
+        }
+
+        return view('panel.employer.employerHome');
     }
 }

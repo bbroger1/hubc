@@ -2,7 +2,8 @@
     <div class="row mb-4">
         <div class="col-lg-12">
             <h3><b>{{ __('Dados Gerais') }}</b></h3>
-            <span class="breadcumb">HUB C / <a href="{{ route('home') }}"><b>{{ __('Painel') }}</b></a></span>
+            <span class="breadcumb">HUB C / <a
+                    href="{{ route('employer.home') }}"><b>{{ __('Painel') }}</b></a></span>
         </div>
         <!-- /.col-lg-12 -->
     </div>
