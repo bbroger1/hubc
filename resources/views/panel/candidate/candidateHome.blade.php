@@ -9,7 +9,7 @@
         @include('panel.candidate.sidebar')
 
         <div id="content">
-            @include('panel.navbar')
+            @include('navbar')
             @include('panel.candidate.content.candidate')
         </div>
     </div>

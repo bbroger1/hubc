@@ -9,8 +9,22 @@
         @include('panel.admin.sidebar')
 
         <div id="content">
-            @include('panel.navbar')
-            @include('panel.admin.content.admin')
+            @include('navbar')
+
+            @if (Request::is('home'))
+                @include('panel.admin.content.admin')
+            @elseif (Request::is('admin/employers'))
+                @include('panel.admin.content.employers')
+            @elseif (Request::is('admin/candidates'))
+                @include('panel.admin.content.candidates')
+            @elseif (Request::is('admin/vacancies'))
+                @include('panel.admin.content.vacancies')
+            @elseif (Request::is('admin/vacancies/analysis/*'))
+                @include('panel.admin.content.vacanciesAnalysis')
+            @elseif (Request::is('admin/profile/*'))
+                @include('panel.admin.content.profile')
+            @endif
+
         </div>
     </div>
 @endsection

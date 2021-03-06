@@ -27,7 +27,7 @@ class HomeController extends Controller
         $type = Auth::user()->type;
 
         if ($type != 1) {
-            return view('auth.login');
+            return view('auth.login')->with('error', 'Faça login como Admin para acessar essa página.');
         }
 
         return view('panel.admin.home');

@@ -30,6 +30,17 @@
                         </span>
                     </a>
                 </li>
+
+                <li>
+                    <a href="{{ route('admin.vacancies') }}">
+                        <span class="sidebar-img">
+                            <img class="img-default" src="{{ asset('images/ellipse_cinza.png') }}"
+                                alt="Elipse cinza">
+                            <img class="img-hover" src="{{ asset('images/ellipse_vermelha.png') }}"
+                                alt="Elipse vermelha"> {{ __('Gerir Vagas') }}
+                        </span>
+                    </a>
+                </li>
             </ul>
         </li>
         <br />
@@ -79,7 +90,29 @@
                             <img class="img-default" src="{{ asset('images/ellipse_cinza.png') }}"
                                 alt="Elipse cinza">
                             <img class="img-hover" src="{{ asset('images/ellipse_vermelha.png') }}"
-                                alt="Elipse vermelha"> {{ __('Dados Gerais') }}
+                                alt="Elipse vermelha"> {{ __('Assinantes') }}
+                        </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('admin.candidates') }}">
+                        <span class="sidebar-img">
+                            <img class="img-default" src="{{ asset('images/ellipse_cinza.png') }}"
+                                alt="Elipse cinza">
+                            <img class="img-hover" src="{{ asset('images/ellipse_vermelha.png') }}"
+                                alt="Elipse vermelha"> {{ __('Candidatos') }}
+                        </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('admin.employers') }}">
+                        <span class="sidebar-img">
+                            <img class="img-default" src="{{ asset('images/ellipse_cinza.png') }}"
+                                alt="Elipse cinza">
+                            <img class="img-hover" src="{{ asset('images/ellipse_vermelha.png') }}"
+                                alt="Elipse vermelha"> {{ __('Empresas') }}
                         </span>
                     </a>
                 </li>
@@ -90,7 +123,7 @@
                             <img class="img-default" src="{{ asset('images/ellipse_cinza.png') }}"
                                 alt="Elipse cinza">
                             <img class="img-hover" src="{{ asset('images/ellipse_vermelha.png') }}"
-                                alt="Elipse vermelha"> {{ __('Assinaturas') }}
+                                alt="Elipse vermelha"> {{ __('Usuários') }}
                         </span>
                     </a>
                 </li>

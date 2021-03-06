@@ -24,6 +24,15 @@
         <div class="row justify-content-center form">
             <div class="col-md-6">
                 <h3 class="text-center"><b class="text-red">Conecte-se para continuar</b></h3>
+                @if (isset($error))
+                    <div id="msg" class="alert alert-danger text-center">
+                        {{ $error }}
+                    </div>
+                @elseif(isset($sucess))
+                    <div id="msg" class="alert alert-sucess text-center">
+                        <p>{{ $sucess }}</p>
+                    </div>
+                @endif
                 <div class="mt-5 mb-2">
                     <a href="#" title="" class="btn btn-register linkedin">
                         <i class="fab fa-linkedin-in"></i>
