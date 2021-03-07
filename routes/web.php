@@ -26,6 +26,7 @@ Route::get('/admin/employers', 'Admin\EmployerController@index')->name('admin.em
 Route::get('/admin/candidates', 'Admin\CandidateController@index')->name('admin.candidates');
 Route::get('/admin/vacancies', 'Admin\VacancieController@index')->name('admin.vacancies');
 Route::get('/admin/vacancies/analysis/{id}', 'Admin\VacancieController@show')->name('admin.vacancies.analysis');
+Route::get('/admin/users', 'Admin\UserController@index')->name('admin.users');
 
 Route::get('/employer/home', 'Employer\HomeController@index')->name('employer.home');
 Route::get('/candidate/home', 'Candidate\HomeController@index')->name('candidate.home');

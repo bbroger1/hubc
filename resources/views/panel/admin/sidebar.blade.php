@@ -118,7 +118,7 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('admin.home') }}">
+                    <a href="{{ route('admin.users') }}">
                         <span class="sidebar-img">
                             <img class="img-default" src="{{ asset('images/ellipse_cinza.png') }}"
                                 alt="Elipse cinza">

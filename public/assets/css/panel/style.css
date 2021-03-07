@@ -260,6 +260,7 @@ a:hover .panel-icon .circle-icon {
     border: 1px solid #F15E61;
     background: none;
     color: #8E96AE;
+    border-radius: 25px;
 }
 
 .btn-pesquisar:hover {
@@ -271,6 +272,7 @@ a:hover .panel-icon .circle-icon {
     border: solid 1px #F15E61;
     font-size: 0.9rem;
     line-height: 1.6;
+    border-radius: 25px;
 }
 
 .input-employer:focus {

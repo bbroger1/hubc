@@ -10,8 +10,8 @@
         <div class="col-sm-6 text-right">
             <form action="" method="POST">
                 @csrf
-                <input type="text" name="search" class="input-employer">
-                <button type="submit" class="btn-pesquisar">Pesquisar</button>
+                <input type="text" name="search_panel" class="input-employer">
+                <button type="submit" name="btn-pesquisar" class="btn-pesquisar">Pesquisar</button>
             </form>
         </div>
     </div>

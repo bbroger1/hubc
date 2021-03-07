@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\LoginRequest;
+use Illuminate\Routing\Redirector;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -39,26 +42,39 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function redirectTo()
+    public function login(LoginRequest $request, Redirector $redirect)
     {
+        $remember = $request->filled('remember_token');
 
-        // User type
-        $type = Auth::user()->type;
+        if (Auth::attempt($request->only('email', 'password'), $remember)) {
+            $request->session()
+                ->regenerate();
 
-        // Check user type
-        switch ($type) {
-            case '1':
-                return '/home';
-                break;
-            case '2':
-                return '/employer/home';
-                break;
-            case '3':
-                return '/candidate/home';
-                break;
-            default:
-                return '/login';
-                break;
+            // User type
+            $type = Auth::user()->type;
+
+            // Check user type
+            switch ($type) {
+                case '1':
+                    return $redirect
+                        ->intended('home');
+                    break;
+                case '2':
+                    return $redirect
+                        ->intended('/employer/home');
+                    break;
+                case '3':
+                    return $redirect
+                        ->intended('/candidate/home');
+                    break;
+                default:
+                    return '/login';
+                    break;
+            }
         }
+
+        throw ValidationException::withMessages([
+            'message' => __('auth.failed')
+        ]);
     }
 }

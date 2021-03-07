@@ -24,14 +24,12 @@
         <div class="row justify-content-center form">
             <div class="col-md-6">
                 <h3 class="text-center"><b class="text-red">Conecte-se para continuar</b></h3>
-                @if (isset($error))
-                    <div id="msg" class="alert alert-danger text-center">
-                        {{ $error }}
-                    </div>
-                @elseif(isset($sucess))
-                    <div id="msg" class="alert alert-sucess text-center">
-                        <p>{{ $sucess }}</p>
-                    </div>
+                @if ($errors->any())
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 @endif
                 <div class="mt-5 mb-2">
                     <a href="#" title="" class="btn btn-register linkedin">
@@ -72,7 +70,7 @@
 
                     <div class="row mt-4">
                         <div class="col-6">
-                            <input id="check-terms" type="checkbox" name="checkbox">
+                            <input id="check-terms" type="checkbox" name="remember_token">
                             <label id="label-check" for="check-terms"> {{ __('Lembrar-me') }}</label>
                         </div>
                         <div class="col-6 text-right">

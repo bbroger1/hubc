@@ -23,6 +23,8 @@
                 @include('panel.admin.content.vacanciesAnalysis')
             @elseif (Request::is('admin/profile/*'))
                 @include('panel.admin.content.profile')
+            @elseif (Request::is('admin/users'))
+                @include('panel.admin.content.users')
             @endif
 
         </div>
