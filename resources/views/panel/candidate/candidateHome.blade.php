@@ -2,7 +2,7 @@
 @push('custom-css')
     <link href="{{ asset('assets/css/panel/style.css') }}" rel="stylesheet" type="text/css">
 @endpush
-@section('title', 'Admin')
+@section('title', 'Candidato')
 @section('content')
     <div class="wrapper">
         <!-- Navigation -->

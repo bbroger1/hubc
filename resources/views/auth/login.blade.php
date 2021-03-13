@@ -24,15 +24,20 @@
         <div class="row justify-content-center form">
             <div class="col-md-6">
                 <h3 class="text-center"><b class="text-red">Conecte-se para continuar</b></h3>
+                @if (isset($message))
+                    {{ $message }}
+                @endif
                 @if ($errors->any())
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
+                    <div class="alert alert-warning text-center">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
                 @endif
                 <div class="mt-5 mb-2">
-                    <a href="#" title="" class="btn btn-register linkedin">
+                    <a href="{{ route('login.linkedin', 'linkedin') }}" title="" class="btn btn-register linkedin">
                         <i class="fab fa-linkedin-in"></i>
                         <span class="ml-2">{{ __('Continuar com Linkedin') }}</span>
                     </a>
@@ -74,7 +79,7 @@
                             <label id="label-check" for="check-terms"> {{ __('Lembrar-me') }}</label>
                         </div>
                         <div class="col-6 text-right">
-                            <a href="{{ route('password.request') }}">{{ __('Esqueci a senha') }}</a>
+                            <a class="text-red" href="{{ route('password.request') }}">{{ __('Esqueci a senha') }}</a>
                         </div>
 
                     </div>

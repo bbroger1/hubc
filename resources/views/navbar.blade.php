@@ -22,8 +22,14 @@
         <li class="nav-item">
             <a class="nav-link" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
-                <span class="username">{{ Auth::user()->name }}</span>
-                <i class="fa fa-user fa-fw"></i>
+                @if (Auth::user()->username)
+                    <span class="username">{{ Auth::user()->username }}</span>
+                    <i class="fa fa-user fa-fw"></i>
+                @else
+                    <span class="username">{{ Auth::user()->name }}</span>
+                    <i class="fa fa-user fa-fw"></i>
+                @endif
+
             </a>
             <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <li class="nav-item">

@@ -158,6 +158,17 @@ a {
     justify-content: center;
 }
 
+.btn-reset_password {
+    border: 1px solid #F15E61;
+    border-radius: 25px;
+}
+
+.btn-reset_password:hover {
+    background-color: #F15E61;
+    color: #FFFFFF;
+    border: none;
+}
+
 /*responsividade*/
 
 @media screen and (max-width: 576px) {

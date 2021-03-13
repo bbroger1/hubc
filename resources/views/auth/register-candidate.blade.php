@@ -40,8 +40,8 @@
 
                     <label for="username">{{ __('Usuário*') }}</label>
                     <div class="form-group row">
-                        <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username"
-                            value="{{ old('username') }}" required autocomplete="username" autofocus>
+                        <input id="username" type="text" class="form-control @error('username') is-invalid @enderror"
+                            name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
                         @error('username')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -83,7 +83,7 @@
                     </div>
                 </form>
                 <div class="mt-5">
-                    <a href="#" title="" class="btn btn-register linkedin">
+                    <a href="{{ route('login.linkedin', 'linkedin') }}" title="" class="btn btn-register linkedin">
                         <i class="fab fa-linkedin-in"></i>
                         <span class="ml-2">{{ __('Registrar com Linkedin') }}</span>
                     </a>

@@ -28,13 +28,12 @@ Route::get('/admin/vacancies', 'Admin\VacancieController@index')->name('admin.va
 Route::get('/admin/vacancies/analysis/{id}', 'Admin\VacancieController@show')->name('admin.vacancies.analysis');
 Route::get('/admin/users', 'Admin\UserController@index')->name('admin.users');
 
-Route::get('/employer/home', 'Employer\HomeController@index')->name('employer.home');
+Route::get('/login/{provider}', 'Auth\LoginController@redirectToProvider')->name('login.linkedin');
+Route::get('/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->name('login.linkedin.callback');
 Route::get('/candidate/home', 'Candidate\HomeController@index')->name('candidate.home');
-
 Route::get('/candidate/register', 'Auth\RegisterCandidateController@candidate')->name('candidate.register');
-
 Route::post('/candidate/create', 'Auth\RegisterCandidateController@create')->name('candidate.create');
 
+Route::get('/employer/home', 'Employer\HomeController@index')->name('employer.home');
 Route::get('/employer/register', 'Auth\RegisterEmployerController@employer')->name('employer.register');
-
 Route::post('/employer/create', 'Auth\RegisterEmployerController@create')->name('employer.create');

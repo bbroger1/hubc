@@ -15,3 +15,12 @@ hr {
 .text-red {
     color: #F15E61;
 }
+
+.text-red:hover {
+    text-decoration: none;
+}
+
+.alert {
+    display: flex;
+    justify-content: center;
+}
