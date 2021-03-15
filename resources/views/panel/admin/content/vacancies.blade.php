@@ -32,23 +32,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($employers as $employer)
+                            @if (count($employers) > 0)
+                                @foreach ($employers as $employer)
+                                    <tr class="text-center">
+                                            <td>{{ \Carbon\Carbon::parse($employer->created_at)->format('d/m/Y') }}</td>
+                                            <td>{{ $employer->name }}</td>
+                                            <td>Empregador</td>
+                                            <td>empregador@teste.com</td>
+                                            <td>Pendente</td>
+                                            <td>
+                                                <a href="{{ route('admin.vacancies.analysis', $employer->id) }}"
+                                                    class="btn btn-profile">Analisar vaga</a>
+                                            </td>
+                                    </tr>
+                                @endforeach
+                            @else
                                 <tr class="text-center">
-                                    @if ($employer)
-                                        <td>{{ \Carbon\Carbon::parse($employer->created_at)->format('d/m/Y') }}</td>
-                                        <td>{{ $employer->name }}</td>
-                                        <td>Empregador</td>
-                                        <td>empregador@teste.com</td>
-                                        <td>Pendente</td>
-                                        <td>
-                                            <a href="{{ route('admin.vacancies.analysis', $employer->id) }}"
-                                                class="btn btn-profile">Analisar vaga</a>
-                                        </td>
-                                    @else
-                                        <span>Ainda não temos empresas cadastradas.</span>
-                                    @endif
+                                    <td colspan="5" class="alert alert-warning">Ainda não temos vagas cadastradas.</td>
                                 </tr>
-                            @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>

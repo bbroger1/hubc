@@ -31,9 +31,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($candidates as $candidate)
-                                <tr class="text-center">
-                                    @if ($candidate)
+                            @if (count($candidates) > 0)
+                                @foreach ($candidates as $candidate)
+                                    <tr class="text-center">
                                         <td>{{ \Carbon\Carbon::parse($candidate->created_at)->format('d/m/Y') }}</td>
                                         <td>{{ $candidate->name }}</td>
                                         <td>Não</td>
@@ -42,11 +42,13 @@
                                             <a href="" class="btn btn-profile">ver perfil</a>
                                             <a href="" class="btn btn-vacancies">ver vagas</a>
                                         </td>
-                                    @else
-                                        <span>Ainda não temos empresas cadastradas.</span>
-                                    @endif
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr class="text-center">
+                                    <td colspan="5" class="alert alert-warning">Ainda não temos candidatos cadastradas.</td>
                                 </tr>
-                            @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>

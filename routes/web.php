@@ -22,6 +22,7 @@ Auth::routes();
 
 Route::get('/home', 'Admin\HomeController@index')->name('admin.home');
 Route::get('/admin/profile/{id}', 'Admin\ProfileController@show')->name('admin.profile');
+Route::post('/admin/profile/{id}', 'Admin\ProfileController@editPersonal')->name('admin.profile.editPersonal');
 Route::get('/admin/employers', 'Admin\EmployerController@index')->name('admin.employers');
 Route::get('/admin/candidates', 'Admin\CandidateController@index')->name('admin.candidates');
 Route::get('/admin/vacancies', 'Admin\VacancieController@index')->name('admin.vacancies');

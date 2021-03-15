@@ -30,6 +30,7 @@
         src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <script src="{{ asset('assets/js/jquery.mask.js') }}"></script>
 
     <script type="text/javascript">
         $(document).ready(function() {

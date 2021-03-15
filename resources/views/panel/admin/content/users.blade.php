@@ -7,12 +7,19 @@
                 </a>
             </span>
         </div>
-        <div class="col-sm-6 text-right">
-            <form action="" method="POST">
-                @csrf
-                <input type="text" name="search_panel" class="input-employer">
-                <button type="submit" class="btn-pesquisar">Pesquisar</button>
-            </form>
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-9 text-right">
+                    <form action="" method="GET">
+                        @csrf
+                        <input type="text" name="search_panel" class="input-employer">
+                        <button type="submit" class="btn-pesquisar">Pesquisar</button>
+                    </form>
+                </div>
+                <div class="col-sm-3">
+                    <button type="submit" class="btn-pesquisar"><i class="fa fa-user fa-fw"></i> Cadastrar</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -31,9 +38,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($users as $user)
-                                <tr class="text-center">
-                                    @if ($user)
+                            @if (count($users) > 0)
+                                @foreach ($users as $user)
+                                    <tr class="text-center">
                                         <td>{{ $user->id }}</td>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
@@ -51,15 +58,18 @@
                                             @if ($user->type == 2)
                                                 <a href="" class="btn btn-profile">ver vagas</a>
                                             @elseif($user->type == 3)
-                                                <a href="" class="btn btn-profile">ver candidaturas</a>
+                                                <a href="" class="btn btn-profile">candidaturas</a>
                                             @endif
                                             <a href="" class="btn btn-vacancies">excluir</a>
                                         </td>
-                                    @else
-                                        <span>Ainda não temos usuários cadastrados.</span>
-                                    @endif
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr class="text-center">
+                                    <td colspan="5" class="alert alert-warning">Ainda não temos usuários cadastradas.
+                                    </td>
                                 </tr>
-                            @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>

@@ -251,6 +251,17 @@ a:hover .panel-icon .circle-icon {
     width: 100%;
 }
 
+.btn-link,
+.profile {
+    color: #8E96AE;
+
+}
+
+.btn-link:hover {
+    text-decoration: none;
+    color: #F15E61;
+}
+
 /* ---------------------------------------------------
     CONTENT ADMIN EMPLOYER
 ----------------------------------------------------- */

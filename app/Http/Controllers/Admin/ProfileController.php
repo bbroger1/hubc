@@ -20,8 +20,12 @@ class ProfileController extends Controller
             abort(404);
         }
 
-        $profiles = User::findorfail($id);
+        $profile = User::findorfail($id);
+        return view('panel.admin.home', compact('profile'));
+    }
 
-        return view('panel.admin.home', compact('profiles'));
+    public function editPersonal(Request $request)
+    {
+        dd($request);
     }
 }
