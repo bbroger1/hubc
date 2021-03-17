@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProfileRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +25,7 @@ class ProfileController extends Controller
         return view('panel.admin.home', compact('profile'));
     }
 
-    public function editPersonal(Request $request)
+    public function editPersonal(ProfileRequest $request)
     {
         dd($request);
     }

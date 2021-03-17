@@ -24,7 +24,7 @@ class ProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['email', 'string'],
+            'cpf' => ['required', 'cpf'],
         ];
     }
 }

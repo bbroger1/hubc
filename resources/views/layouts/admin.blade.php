@@ -47,6 +47,7 @@
 
     </script>
     <script src="{{ asset('assets/js/panel/script_panel.js') }}"></script>
+    <script src="{{ asset('assets/js/panel/bootstrap-filestyle.min.js') }}"></script>
 </body>
 
 </html>
