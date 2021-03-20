@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProfilePasswordRequest;
 use App\Http\Requests\ProfileRequest;
 use App\Models\User;
+use App\Models\ProfileAdm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -21,12 +25,151 @@ class ProfileController extends Controller
             abort(404);
         }
 
-        $profile = User::findorfail($id);
-        return view('panel.admin.home', compact('profile'));
+        $user = User::join('profile_adms', 'profile_adms.users_id', '=', 'users.id')
+            ->select(
+                'users.id',
+                'users.name',
+                'users.username',
+                'users.email',
+                'profile_adms.image',
+                'profile_adms.cpf',
+                'profile_adms.birthday',
+                'profile_adms.phone',
+            )->get(Auth::user()->id)->first();
+
+        $user['birthday'] = date('d/m/Y', strtotime($user['birthday']));
+
+        if (!$user) {
+            return redirect()
+                ->route('admin.profile', $user->id)
+                ->with('warning', 'Dados não encontrados.');
+        }
+        return view('panel.admin.home', compact('user'));
     }
 
-    public function editPersonal(ProfileRequest $request)
+    public function update(ProfileRequest $request)
     {
-        dd($request);
+        $id = Auth::user()->id;
+        //cpf teste 353.008.720-32
+        DB::beginTransaction();
+        try {
+            if (!$user = User::find($id)) {
+                return redirect()
+                    ->route('admin.profile', $user->id);
+            }
+
+            $user_all = $request->only('name', 'username', 'email');
+
+            if (!$user->update($user_all)) {
+                return redirect()
+                    ->route('admin.profile', $user->id)
+                    ->with('warning', 'Não foi possível editar os dados.[cód. 2]');
+            };
+
+            $profile = ProfileAdm::where('users_id', $id)->first();
+
+            if ($profile) {
+                $profile_all = $request->only('cpf', 'birthday', 'phone');
+                $profile_all['birthday'] = date('Y-m-d', strtotime($profile_all['birthday']));
+                if (!$profile->update($profile_all)) {
+                    dd('entrou no if');
+                    DB::rollBack();
+                    return redirect()
+                        ->route('admin.profile', $user->id)
+                        ->with('warning', 'Não foi possível editar os dados.[cód. 1]');
+                }
+                DB::commit();
+                return redirect()
+                    ->route('admin.profile', $user->id)
+                    ->with('message', 'Dados editados com sucesso.');
+            } else {
+                $profile_all['users_id'] = $id;
+                $profile_all['cpf'] = $request->cpf;
+                $profile_all['birthday'] = $request->birthday;
+                $profile_all['phone'] = $request->phone;
+
+                if (!ProfileAdm::create($profile_all)) {
+                    DB::rollBack();
+                    return redirect()
+                        ->route('admin.profile', $user->id)
+                        ->with('warning', 'Não foi possível editar os dados.[cód. 1]');
+                }
+                DB::commit();
+                return redirect()
+                    ->route('admin.profile', $user->id)
+                    ->with('message', 'Dados editados com sucesso.');
+            }
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return redirect()
+                ->route('admin.profile', $user->id)
+                ->with('warning', 'Não foi possível editar os dados.[cód. 3]');
+        }
+    }
+
+    public function updateImage(Request $request)
+    {
+        $id = Auth::user()->id;
+        $profile = ProfileAdm::where('users_id', $id)->first();
+        if ($profile->image) {
+            $image_old = $profile->image;
+        }
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $ext = $request->image->extension();
+            if ($ext != 'jpg' && $ext != 'jpeg' && $ext != 'png') {
+                return redirect()
+                    ->route('admin.profile', $id)
+                    ->with('warning', 'A extensão do arquivo deve ser JPG, JPEG ou PNG');
+            }
+            $filename = md5(rand(0, 99)) . '.' . $request->image->extension();
+
+            if (!$request->file('image')->storeAs('profile/' . $id, $filename)) {
+                return redirect()
+                    ->route('admin.profile', $id)
+                    ->with('warning', 'Algo ocorreu e não foi possível atualizar a imagem. Tente novamente.[Cód. 1]');
+            };
+
+            $profile_image = ['image' => $filename];
+
+            if (!$profile->update($profile_image)) {
+                if (!$request->file('image')->storeAs('profile/' . $id, $filename)) {
+                    return redirect()
+                        ->route('admin.profile', $id)
+                        ->with('warning', 'Algo ocorreu e não foi possível atualizar a imagem. Tente novamente.[Cód. 2]');
+                };
+            }
+
+            if ($image_old) {
+                unlink('storage/profile/' . $id . '/' . $image_old);
+            }
+
+            return redirect()
+                ->route('admin.profile', $id)
+                ->with('message', 'Imagem atualizada com sucesso.');
+        } else {
+            return redirect()
+                ->route('admin.profile', $id)
+                ->with('warning', 'Por favor, selecione um arquivo válido');
+        }
+    }
+
+    public function updatePassword(ProfilePasswordRequest $request)
+    {
+        $user = User::find(Auth::user()->id);
+
+        if (!$request->password === $request->password_confirmation) {
+            return redirect()
+                ->route('admin.profile', $user->id)
+                ->with('warning', 'As senhas digitadas devem ser iguais.');
+        };
+
+        if ($user->update([
+            'password' => Hash::make($request['password']),
+        ])) {
+            return redirect()
+                ->route('admin.profile', $user->id)
+                ->with('message', 'Senha alterada com sucesso.');
+        };
     }
 }

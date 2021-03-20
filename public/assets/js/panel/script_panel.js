@@ -77,14 +77,6 @@ function btnUpload() {
         buttonName: 'btn-danger',
         buttonText: ' Seleciona a Imagem'
     });
-    $('#BSbtnsuccess').filestyle({
-        buttonName: 'btn-success',
-        buttonText: ' Open'
-    });
-    $('#BSbtninfo').filestyle({
-        buttonName: 'btn-info',
-        buttonText: ' Select a File'
-    });
 }
 
 $('#image').on('change', function () {
@@ -93,3 +85,18 @@ $('#image').on('change', function () {
     filename.html(image);
 });
 
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#newimage').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]); // convert to base64 string
+    }
+}
+
+$("#BSbtndanger").on('change', function () {
+    readURL(this);
+});

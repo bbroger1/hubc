@@ -15,6 +15,10 @@ class ProfileAdm extends Model
      * @var array
      */
     protected $fillable = [
-        'image'
+        'image',
+        'cpf',
+        'birthday',
+        'phone',
+        'users_id'
     ];
 }

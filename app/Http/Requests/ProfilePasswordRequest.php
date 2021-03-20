@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProfileRequest extends FormRequest
+class ProfilePasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +23,15 @@ class ProfileRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->segment(3);
-
         return [
-            'cpf' => ['required', 'cpf', 'unique:profile_adms,cpf,' . $id . ',users_id'],
+            'password' => ['required', 'string', 'min:8', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d X])(?=.*[@*!$#%]).*$/', 'confirmed'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'password.regex' => 'A senha deve conter 8 caracteres incluindo números, letras maiúsculas, minúsculas e carácter especial'
         ];
     }
 }

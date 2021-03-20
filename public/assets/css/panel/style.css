@@ -10,6 +10,10 @@ p {
     line-height: 1.7em;
 }
 
+li {
+    list-style-type: none;
+}
+
 a,
 a:hover,
 a:focus {

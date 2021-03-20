@@ -22,7 +22,9 @@ Auth::routes();
 
 Route::get('/home', 'Admin\HomeController@index')->name('admin.home');
 Route::get('/admin/profile/{id}', 'Admin\ProfileController@show')->name('admin.profile');
-Route::post('/admin/profile/{id}/edit', 'Admin\ProfileController@editPersonal')->name('admin.profile.editPersonal');
+Route::post('/admin/profile/{id}/edit', 'Admin\ProfileController@update')->name('admin.profile.update');
+Route::post('/admin/profile/{id}/edit_image', 'Admin\ProfileController@updateImage')->name('admin.profile.updateImage');
+Route::post('/admin/profile/{id}/edit_password', 'Admin\ProfileController@updatePassword')->name('admin.profile.updatePassword');
 Route::get('/admin/employers', 'Admin\EmployerController@index')->name('admin.employers');
 Route::get('/admin/candidates', 'Admin\CandidateController@index')->name('admin.candidates');
 Route::get('/admin/vacancies', 'Admin\VacancieController@index')->name('admin.vacancies');

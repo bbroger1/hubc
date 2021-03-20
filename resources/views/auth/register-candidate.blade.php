@@ -65,7 +65,7 @@
                     <label for="password">{{ __('Criar senha*') }}</label>
                     <div class="form-group row">
                         <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
-                            name="password" required autocomplete="new-password">
+                            name="password" min="8" required autocomplete="new-password">
                         @error('password')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

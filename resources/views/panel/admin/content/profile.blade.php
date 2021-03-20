@@ -3,18 +3,12 @@
         <div class="col-sm-6">
             <h3><b>{{ __('Detalhes Perfil') }}</b></h3>
             <span class="breadcumb">HUB C /
-                <a href="{{ route('admin.profile', $profile->id) }}"><b>{{ __('Perfil') }}</b>
+                <a href="{{ route('admin.profile', $user->id) }}"><b>{{ __('Perfil') }}</b>
                 </a>
             </span>
         </div>
     </div>
-    @if ($errors->any())
-        <ul class="alert alert-danger">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    @endif
+    @include('layouts.partials.alerts')
     <div class="row profile">
         <div class="accordion col-12" id="accordionExample">
             <!-- Trocar dados pessoais -->
@@ -30,7 +24,7 @@
 
                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                     <div class="card-body">
-                        <form action="{{ route('admin.profile.editPersonal', $profile->id) }}" method="POST">
+                        <form action="{{ route('admin.profile.update', $user->id) }}" method="POST">
                             @csrf
                             <div class="form-group">
                                 <div class="row">
@@ -38,13 +32,13 @@
                                         <label for="name">{{ __('Nome completo') }}</label>
                                         <input type="text" class="form-control" id="name" name="name"
                                             placeholder="Informe o seu nome completo"
-                                            value="{{ $profile->name ?? old('name') }}">
+                                            value="{{ $user->name ?? old('name') }}">
                                     </div>
                                     <div class="col-md-3">
                                         <label for="username">{{ __('Usuário') }}</label>
                                         <input type="text" class="form-control" id="username" name="username"
                                             placeholder="Nome de usuário"
-                                            value="{{ $profile->username ?? old('username') }}">
+                                            value="{{ $user->username ?? old('username') }}">
                                     </div>
                                 </div>
                             </div>
@@ -53,13 +47,13 @@
                                     <div class="col-md-6">
                                         <label for="cpf">{{ __('CPF') }}</label>
                                         <input type="text" class="form-control" id="cpf" name="cpf"
-                                            placeholder="000.000.000-00" value="{{ $profile->cpf ?? old('cpf') }}">
+                                            placeholder="000.000.000-00" value="{{ $user->cpf ?? old('cpf') }}">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="birthday">{{ __('Data Nasc.') }}</label>
                                         <input type="text" class="form-control" id="birthday" name="birthday"
                                             placeholder="00/00/0000"
-                                            value="{{ $profile->birthday ?? old('birthday') }}">
+                                            value="{{ $user->birthday ?? old('birthday') }}">
                                     </div>
                                 </div>
                             </div>
@@ -68,13 +62,12 @@
                                     <div class="col-md-6">
                                         <label for="phone">{{ __('Celular') }}</label>
                                         <input type="text" class="form-control" id="phone" name="phone"
-                                            placeholder="(00) 00000-0000"
-                                            value="{{ $profile->phone ?? old('phone') }}">
+                                            placeholder="(00) 00000-0000" value="{{ $user->phone ?? old('phone') }}">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="email">{{ __('Email') }}</label>
                                         <input type="email" class="form-control" id="email" name="email"
-                                            placeholder="Email válido" value="{{ $profile->email ?? old('email') }}">
+                                            placeholder="Email válido" value="{{ $user->email ?? old('email') }}">
                                     </div>
                                 </div>
                             </div>
@@ -98,9 +91,23 @@
                 </div>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                     <div class="card-body">
-                        <form action="" method="POST" enctype='multipart/form-data'>
+                        <div class="row text-center mb-3">
+                            <div class="col-md-6">
+                                <div><label for="">Imagem atual:</label></div>
+                                <img src="{{ url("storage/profile/{$user->id}/{$user->image}") }}"
+                                    alt="{{ $user->image }}" width='100' height='100'>
+                            </div>
+                            <div class="col-md-6">
+                                <div><label for="">Nova imagem:</label></div>
+                                <img id="newimage" src="{{ url('images/profile_basic.png') }}" alt="" width='100'
+                                    height='100'>
+                            </div>
+                        </div>
+                        <form action="{{ route('admin.profile.updateImage', $user->id) }}" method="POST"
+                            enctype='multipart/form-data'>
+                            @csrf
                             <div class="form-group">
-                                <input type="file" data-icon="true" id="BSbtndanger">
+                                <input type="file" name="image" data-icon="true" id="BSbtndanger">
                             </div>
                             <div class="col-sm-12 text-right">
                                 <button class="btn btn-primary" type="submit">Enviar</button>
@@ -121,9 +128,8 @@
                 </div>
                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                     <div class="card-body">
-                        <form method="POST" action="{{ route('password.update') }}">
+                        <form method="POST" action="{{ route('admin.profile.updatePassword', $user->id) }}">
                             @csrf
-
                             <div class="form-group row">
                                 <label for="password"
                                     class="col-md-4 col-form-label text-md-right">{{ __('Nova Senha') }}</label>
