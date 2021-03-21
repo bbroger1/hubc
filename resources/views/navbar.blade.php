@@ -22,12 +22,19 @@
         <li class="nav-item">
             <a class="nav-link" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
-                @if (Auth::user()->username)
-                    <span class="username">{{ Auth::user()->username }}</span>
-                    <i class="fa fa-user fa-fw"></i>
+                @if (session()->get('username'))
+                    <span class="username">{{ session()->get('username') }}</span>
                 @else
-                    <span class="username">{{ Auth::user()->name }}</span>
-                    <i class="fa fa-user fa-fw"></i>
+                    <span class="username">{{ session()->get('name') }}</span>
+                @endif
+                @if (session()->get('image'))
+                    @php
+                        $image = session()->get('image');
+                    @endphp
+                    <img class='rounded-circle' src='{{ url('storage/profile/' . Auth::user()->id . "/{$image}") }}'
+                        width='20' height='20'>
+                @else
+                    <img class='rounded-circle' src="{{ url('images/profile_basic.png') }}" width='20' height='20'>
                 @endif
 
             </a>
