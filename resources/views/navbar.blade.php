@@ -46,7 +46,7 @@
                             {{ __('Perfil') }}
                         </a>
                     @elseif(Auth::user()->type === 2)
-                        <a href="#" class="dropdown-item">
+                        <a href="{{ route('employer.profile', Auth::user()->id) }}" class="dropdown-item">
                             <i class="fa fa-user fa-fw"></i>
                             {{ __('Perfil') }}
                         </a>

@@ -264,6 +264,7 @@ a:hover .panel-icon .circle-icon {
     background: none;
     color: #8E96AE;
     border-radius: 25px;
+    width: 120px;
 }
 
 .btn-pesquisar:hover {
@@ -443,6 +444,11 @@ a:hover .panel-icon .circle-icon {
     display: block;
     cursor: pointer;
     width: 100%;
+}
+
+#erroCep {
+    color: red;
+    font-size: 12px;
 }
 
 /* ---------------------------------------------------

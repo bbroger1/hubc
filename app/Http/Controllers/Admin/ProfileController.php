@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
+use function PHPUnit\Framework\isNull;
+
 class ProfileController extends Controller
 {
     public function __construct()
@@ -25,25 +27,12 @@ class ProfileController extends Controller
             abort(404);
         }
 
-        $user = User::join('profile_adms', 'profile_adms.users_id', '=', 'users.id')
-            ->select(
-                'users.id',
-                'users.name',
-                'users.username',
-                'users.email',
-                'profile_adms.image',
-                'profile_adms.cpf',
-                'profile_adms.birthday',
-                'profile_adms.phone',
-            )->get(Auth::user()->id)->first();
+        $user = User::find(Auth::user()->id);
 
-        $user['birthday'] = date('d/m/Y', strtotime($user['birthday']));
-
-        if (!$user) {
-            return redirect()
-                ->route('admin.profile', $user->id)
-                ->with('warning', 'Dados não encontrados.');
+        if (isset($user->profileAdm->birthday)) {
+            $user->profileAdm->birthday = date('d/m/Y', strtotime($user->profileAdm->birthday));
         }
+
         return view('panel.admin.home', compact('user'));
     }
 
@@ -55,15 +44,15 @@ class ProfileController extends Controller
         try {
             if (!$user = User::find($id)) {
                 return redirect()
-                    ->route('admin.profile', $user->id);
+                    ->route('admin.profile', $id);
             }
 
             $user_all = $request->only('name', 'username', 'email');
 
             if (!$user->update($user_all)) {
                 return redirect()
-                    ->route('admin.profile', $user->id)
-                    ->with('warning', 'Não foi possível editar os dados.[cód. 2]');
+                    ->route('admin.profile', $id)
+                    ->with('warning', 'Não foi possível editar os dados.[cód. 1]');
             };
 
             $profile = ProfileAdm::where('users_id', $id)->first();
@@ -75,35 +64,36 @@ class ProfileController extends Controller
                     dd('entrou no if');
                     DB::rollBack();
                     return redirect()
-                        ->route('admin.profile', $user->id)
-                        ->with('warning', 'Não foi possível editar os dados.[cód. 1]');
+                        ->route('admin.profile', $id)
+                        ->with('warning', 'Não foi possível editar os dados.[cód. 2]');
                 }
                 DB::commit();
                 return redirect()
-                    ->route('admin.profile', $user->id)
+                    ->route('admin.profile', $id)
                     ->with('message', 'Dados editados com sucesso.');
             } else {
                 $profile_all['users_id'] = $id;
                 $profile_all['cpf'] = $request->cpf;
                 $profile_all['birthday'] = $request->birthday;
+                $profile_all['birthday'] = date('Y-m-d', strtotime($profile_all['birthday']));
                 $profile_all['phone'] = $request->phone;
 
                 if (!ProfileAdm::create($profile_all)) {
                     DB::rollBack();
                     return redirect()
-                        ->route('admin.profile', $user->id)
-                        ->with('warning', 'Não foi possível editar os dados.[cód. 1]');
+                        ->route('admin.profile', $id)
+                        ->with('warning', 'Não foi possível editar os dados.[cód. 3]');
                 }
                 DB::commit();
                 return redirect()
-                    ->route('admin.profile', $user->id)
+                    ->route('admin.profile', $id)
                     ->with('message', 'Dados editados com sucesso.');
             }
         } catch (\Throwable $e) {
             DB::rollBack();
             return redirect()
-                ->route('admin.profile', $user->id)
-                ->with('warning', 'Não foi possível editar os dados.[cód. 3]');
+                ->route('admin.profile', $id)
+                ->with('warning', 'Não foi possível editar os dados.[cód. 4]' . $e);
         }
     }
 
@@ -140,7 +130,8 @@ class ProfileController extends Controller
                 };
             }
 
-            if ($image_old) {
+            session(['image' => $filename]);
+            if (isset($image_old)) {
                 unlink('storage/profile/' . $id . '/' . $image_old);
             }
 

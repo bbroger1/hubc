@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.employer')
 @push('custom-css')
     <link href="{{ asset('assets/css/panel/style.css') }}" rel="stylesheet" type="text/css">
 @endpush
@@ -10,7 +10,12 @@
 
         <div id="content">
             @include('navbar')
-            @include('panel.employer.content.employer')
+            @if (Request::is('employer/home'))
+                @include('panel.employer.content.employer')
+            @elseif (Request::is('employer/profile/*'))
+                @include('panel.employer.content.profile')
+            @endif
+
         </div>
     </div>
 @endsection

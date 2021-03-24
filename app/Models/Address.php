@@ -5,21 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProfileAdm extends Model
+class Address extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
-        'image',
-        'cpf',
-        'birthday',
-        'phone',
-        'users_id'
+        'zip_code',
+        'users_id',
+        'address',
+        'number',
+        'complement',
+        'neighborhood',
+        'city',
+        'state'
     ];
 
     public function user()

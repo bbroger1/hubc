@@ -21,6 +21,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'Admin\HomeController@index')->name('admin.home');
+
 Route::get('/admin/profile/{id}', 'Admin\ProfileController@show')->name('admin.profile');
 Route::post('/admin/profile/{id}/edit', 'Admin\ProfileController@update')->name('admin.profile.update');
 Route::post('/admin/profile/{id}/edit_image', 'Admin\ProfileController@updateImage')->name('admin.profile.updateImage');
@@ -40,3 +41,9 @@ Route::post('/candidate/create', 'Auth\RegisterCandidateController@create')->nam
 Route::get('/employer/home', 'Employer\HomeController@index')->name('employer.home');
 Route::get('/employer/register', 'Auth\RegisterEmployerController@employer')->name('employer.register');
 Route::post('/employer/create', 'Auth\RegisterEmployerController@create')->name('employer.create');
+Route::get('/employer/profile/{id}', 'Employer\ProfileController@show')->name('employer.profile');
+Route::post('/employer/profile/{id}/edit', 'Employer\ProfileController@update')->name('employer.profile.update');
+Route::post('/employer/profile/{id}/edit_about', 'Employer\ProfileController@updateAbout')->name('employer.profile.updateAbout');
+Route::post('/employer/profile/{id}/edit_address', 'Employer\ProfileController@updateAddress')->name('employer.profile.updateAddress');
+Route::post('/employer/profile/{id}/edit_image', 'Employer\ProfileController@updateImage')->name('employer.profile.updateImage');
+Route::post('/employer/profile/{id}/edit_password', 'Employer\ProfileController@updatePassword')->name('employer.profile.updatePassword');

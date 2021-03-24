@@ -58,4 +58,19 @@ class User extends Authenticatable
     {
         $this->notify(new ResetPasswordNotification($token));
     }
+
+    public function profileAdm()
+    {
+        return $this->hasOne('App\Models\ProfileAdm', 'users_id', 'id');
+    }
+
+    public function profileEmployer()
+    {
+        return $this->hasOne('App\Models\ProfileEmployer', 'users_id', 'id');
+    }
+
+    public function address()
+    {
+        return $this->hasOne('App\Models\Address', 'users_id', 'id');
+    }
 }

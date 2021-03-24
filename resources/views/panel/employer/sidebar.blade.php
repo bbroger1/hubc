@@ -1,6 +1,8 @@
 <nav id="sidebar">
     <div class="sidebar-header text-center">
-        <img class="img-logo" src="{{ asset('images/logo_vermelha.png') }}" alt="HUBC - Logo">
+        <a href="{{ route('employer.home') }}">
+            <img class="img-logo" src="{{ asset('images/logo_vermelha.png') }}" alt="HUBC - Logo">
+        </a>
     </div>
 
     <ul class="list-unstyled components">

@@ -31,7 +31,8 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
     <script src="{{ asset('assets/js/jquery.mask.js') }}"></script>
-
+    <script src="https://cdn.tiny.cloud/1/yqn4gckzuabsp41bz20dzbcgnd2q35du6k3vj0bdogil67xm/tinymce/5/tinymce.min.js"
+        referrerpolicy="origin"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $("#sidebar").mCustomScrollbar({
@@ -49,6 +50,7 @@
     <script src="{{ asset('assets/js/panel/script_panel.js') }}"></script>
     <script src="{{ asset('assets/js/panel/bootstrap-filestyle.min.js') }}"></script>
     <script src="{{ asset('assets/js/panel/viacep.js') }}"></script>
+    <script src="{{ asset('assets/js/panel/tinymce.js') }}"></script>
 
 </body>
 

@@ -47,13 +47,14 @@
                                     <div class="col-md-6">
                                         <label for="cpf">{{ __('CPF') }}</label>
                                         <input type="text" class="form-control" id="cpf" name="cpf"
-                                            placeholder="000.000.000-00" value="{{ $user->cpf ?? old('cpf') }}">
+                                            placeholder="000.000.000-00"
+                                            value="{{ $user->profileAdm->cpf ?? old('cpf') }}">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="birthday">{{ __('Data Nasc.') }}</label>
                                         <input type="text" class="form-control" id="birthday" name="birthday"
                                             placeholder="00/00/0000"
-                                            value="{{ $user->birthday ?? old('birthday') }}">
+                                            value="{{ $user->profileAdm->birthday ?? old('birthday') }}">
                                     </div>
                                 </div>
                             </div>
@@ -62,7 +63,8 @@
                                     <div class="col-md-6">
                                         <label for="phone">{{ __('Celular') }}</label>
                                         <input type="text" class="form-control" id="phone" name="phone"
-                                            placeholder="(00) 00000-0000" value="{{ $user->phone ?? old('phone') }}">
+                                            placeholder="(00) 00000-0000"
+                                            value="{{ $user->profileAdm->phone ?? old('phone') }}">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="email">{{ __('Email') }}</label>
@@ -94,8 +96,12 @@
                         <div class="row text-center mb-3">
                             <div class="col-md-6">
                                 <div><label for="">Imagem atual:</label></div>
-                                <img src="{{ url("storage/profile/{$user->id}/{$user->image}") }}"
-                                    alt="{{ $user->image }}" width='100' height='100'>
+                                @if ($user->profileAdm->image)
+                                    <img src="{{ url("storage/profile/{$user->id}/{$user->profileAdm->image}") }}"
+                                        alt="{{ $user->profileAdm->image }}" width='100' height='100'>
+                                @else
+                                    <img src="{{ url('images/profile_basic.png') }}" alt="" width='100' height='100'>
+                                @endif
                             </div>
                             <div class="col-md-6">
                                 <div><label for="">Nova imagem:</label></div>

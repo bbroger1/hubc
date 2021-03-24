@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProfileRequest extends FormRequest
+class ProfileEmployerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,16 +26,20 @@ class ProfileRequest extends FormRequest
         $id = $this->segment(3);
 
         return [
-            'cpf' => ['required', 'cpf', 'unique:profile_adms,cpf,' . $id . ',users_id'],
+            'cnpj' => ['required', 'cnpj', 'unique:profile_employers,cnpj,' . $id . ',users_id'],
             'name' => ['required', 'string'],
-            'email' => ['required', 'string']
+            'email' => ['required', 'email', 'string'],
+            'representative_name' => ['required', 'string']
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'O campo nome é obrigatório.',
+            'name.required' => 'O campo razão social é obrigatório.',
+            'cnpj.required' => 'O campo CNPJ é obrigatório.',
+            'cnpj.unique' => 'O CNPJ informado já esta cadastrado.',
+            'representative_name.required' => 'O campo representante é obrigatório.',
         ];
     }
 }
