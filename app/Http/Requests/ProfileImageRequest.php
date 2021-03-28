@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProfileRequest extends FormRequest
+class ProfileImageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,21 +23,17 @@ class ProfileRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->segment(3);
-
         return [
-            'cpf' => ['required', 'cpf', 'unique:profile_adms,cpf,' . $id . ',users_id'],
-            'name' => ['required', 'string'],
-            'email' => ['required', 'string'],
-            'birthday' => ['date_format:d/m/Y']
+            'image' => 'required|mimes:jpg,png,jpeg|file|max:2048'
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'O campo nome é obrigatório.',
-            'birthday.date_format' => 'Favor informar data de nascimento válida (dd/mm/AAAA)'
+            'image.required' => 'Favor incluir um arquivo para upload.',
+            'image.mimes' => 'A extensão do arquivo deve ser JPG, JPEG ou PNG',
+            'image.max' => 'O arquivo não pode ser maior que 2MB.'
         ];
     }
 }

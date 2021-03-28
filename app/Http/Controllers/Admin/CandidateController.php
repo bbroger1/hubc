@@ -26,10 +26,9 @@ class CandidateController extends Controller
      */
     public function index()
     {
-        $type = Auth::user()->type;
-
-        if ($type != 1) {
-            return view('auth.login')->with('error', 'Faça login como Admin para acessar essa página.');
+        if (!Auth::user()->isAdmin()) {
+            return view('auth.login')
+                ->with('warning', 'Faça login como Admin para acessar essa página.');
         }
 
         $candidates = User::where('type', 3)->paginate();

@@ -11,7 +11,7 @@
         <div id="content">
             @include('navbar')
 
-            @if (Request::is('home'))
+            @if (Request::is('admin/home'))
                 @include('panel.admin.content.admin')
             @elseif (Request::is('admin/employers'))
                 @include('panel.admin.content.employers')

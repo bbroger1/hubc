@@ -201,7 +201,7 @@
                         <div class="row text-center mb-3">
                             <div class="col-md-6">
                                 <div><label for="">Imagem atual:</label></div>
-                                @if ($user->profileEmployer->image)
+                                @if (isset($user->profileEmployer->image))
                                     <img src="{{ url("storage/profile/{$user->id}/{$user->profileEmployer->image}") }}"
                                         alt="{{ $user->profileEmployer->image }}" width='100' height='100'>
                                 @else

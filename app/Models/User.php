@@ -69,6 +69,11 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\ProfileEmployer', 'users_id', 'id');
     }
 
+    public function profileCandidate()
+    {
+        return $this->hasOne('App\Models\ProfileCandidate', 'users_id', 'id');
+    }
+
     public function address()
     {
         return $this->hasOne('App\Models\Address', 'users_id', 'id');

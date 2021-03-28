@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Employer;
+namespace App\Http\Controllers\Candidate;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProfileEmployerRequest;
+use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\ProfileAddressRequest;
 use App\Http\Requests\ProfilePasswordRequest;
 use App\Http\Requests\ProfileImageRequest;
 use App\Models\Address;
 use App\Models\User;
-use App\Models\ProfileEmployer;
+use App\Models\ProfileCandidate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -30,67 +30,76 @@ class ProfileController extends Controller
 
         $user = User::find(Auth::user()->id);
 
-        if (isset($user->profileEmployer->cnpj)) {
-            $user->profileEmployer->cnpj = format_cpf_cnpj($user->profileEmployer->cnpj);
+        if (isset($user->profileCandidate->birthday)) {
+            $user->profileCandidate->birthday = format_date($user->profileCandidate->birthday);
         }
-        return view('panel.employer.employerHome', compact('user'));
+
+        if (isset($user->profileCandidate->cpf)) {
+            $user->profileCandidate->cpf = format_cpf_cnpj($user->profileCandidate->cpf);
+        }
+        return view('panel.candidate.candidateHome', compact('user'));
     }
 
-    public function update(ProfileEmployerRequest $request)
+    public function update(ProfileRequest $request)
     {
         $id = Auth::user()->id;
-        //cnpj teste 32.732.034/0001-67
+        //cpf teste 353.008.720-32
         DB::beginTransaction();
         try {
             if (!$user = User::find($id)) {
                 return redirect()
-                    ->route('employer.profile', $id);
+                    ->route('candidate.profile', $id);
             }
 
-            $user_all = $request->only('name', 'username', 'email', 'representative_name');
+            $user_all = $request->only('name', 'username', 'email');
 
             if (!$user->update($user_all)) {
                 return redirect()
-                    ->route('employer.profile', $id)
+                    ->route('candidate.profile', $id)
                     ->with('warning', 'Não foi possível editar os dados.[cód. 1]');
             };
 
-            $profile = ProfileEmployer::where('users_id', $id)->first();
+            $profile = ProfileCandidate::where('users_id', $id)->first();
 
             if ($profile) {
-                $profile_all = $request->only('cnpj', 'phone');
-                $profile_all['cnpj'] = format_cpf_cnpj_db($profile_all['cnpj']);
+                $profile_all = $request->only('cpf', 'phone', 'birthday');
+                $profile_all['cpf'] = format_cpf_cnpj_db($profile_all['cpf']);
+
+                if (isset($profile_all['birthday'])) {
+                    $profile_all['birthday'] = format_date_db($profile_all['birthday']);
+                }
 
                 if (!$profile->update($profile_all)) {
                     DB::rollBack();
                     return redirect()
-                        ->route('employer.profile', $id)
+                        ->route('candidate.profile', $id)
                         ->with('warning', 'Não foi possível editar os dados.[cód. 2]');
                 }
                 DB::commit();
                 return redirect()
-                    ->route('employer.profile', $id)
+                    ->route('candidate.profile', $id)
                     ->with('message', 'Dados editados com sucesso.');
             } else {
                 $profile_all['users_id'] = $id;
-                $profile_all['cnpj'] = format_cpf_cnpj_db($request->cnpj);
+                $profile_all['cpf'] = format_cpf_cnpj_db($request->cpf);
+                $profile_all['birthday'] = format_date_db($request->birthday);
                 $profile_all['phone'] = $request->phone;
 
-                if (!ProfileEmployer::create($profile_all)) {
+                if (!ProfileCandidate::create($profile_all)) {
                     DB::rollBack();
                     return redirect()
-                        ->route('employer.profile', $id)
+                        ->route('candidate.profile', $id)
                         ->with('warning', 'Não foi possível editar os dados.[cód. 3]');
                 }
                 DB::commit();
                 return redirect()
-                    ->route('employer.profile', $id)
+                    ->route('candidate.profile', $id)
                     ->with('message', 'Dados editados com sucesso.');
             }
         } catch (\Throwable $e) {
             DB::rollBack();
             return redirect()
-                ->route('employer.profile', $id)
+                ->route('candidate.profile', $id)
                 ->with('warning', 'Não foi possível editar os dados.[cód. 4]' . $e);
         }
     }
@@ -104,7 +113,7 @@ class ProfileController extends Controller
             if ($address) {
                 if (!$address->users_id = $id) {
                     return redirect()
-                        ->route('employer.profile', $id);
+                        ->route('candidate.profile', $id);
                 }
 
                 $address_all = $request->except('_token');
@@ -112,13 +121,13 @@ class ProfileController extends Controller
                 if (!$address->update($address_all)) {
                     DB::rollBack();
                     return redirect()
-                        ->route('employer.profile', $id)
+                        ->route('candidate.profile', $id)
                         ->with('warning', 'Não foi possível editar os dados.[cód. 2]');
                 }
 
                 DB::commit();
                 return redirect()
-                    ->route('employer.profile', $id)
+                    ->route('candidate.profile', $id)
                     ->with('message', 'Dados editados com sucesso.');
             } else {
                 $address_all['users_id'] = $id;
@@ -133,18 +142,18 @@ class ProfileController extends Controller
                 if (!Address::create($address_all)) {
                     DB::rollBack();
                     return redirect()
-                        ->route('employer.profile', $id)
+                        ->route('candidate.profile', $id)
                         ->with('warning', 'Não foi possível editar os dados.[cód. 3]');
                 }
                 DB::commit();
                 return redirect()
-                    ->route('employer.profile', $id)
+                    ->route('candidate.profile', $id)
                     ->with('message', 'Dados editados com sucesso.');
             }
         } catch (\Throwable $e) {
             DB::rollBack();
             return redirect()
-                ->route('employer.profile', $id)
+                ->route('candidate.profile', $id)
                 ->with('warning', 'Não foi possível editar os dados.[cód. 4]' . $e);
         }
     }
@@ -155,35 +164,35 @@ class ProfileController extends Controller
 
         if (!$user = User::find($id)) {
             return redirect()
-                ->route('employer.profile', $id);
+                ->route('candidate.profile', $id);
         }
 
-        $profile = ProfileEmployer::where('users_id', $id)->first();
+        $profile = ProfileCandidate::where('users_id', $id)->first();
         $profile_all = $request->only('description');
 
         if (!$profile->update($profile_all)) {
             return redirect()
-                ->route('employer.profile', $id)
+                ->route('candidate.profile', $id)
                 ->with('warning', 'Não foi possível editar os dados.[cód. 1]');
         };
 
         return redirect()
-            ->route('employer.profile', $id)
+            ->route('candidate.profile', $id)
             ->with('message', 'Dados editados com sucesso.');
     }
 
     public function updateImage(ProfileImageRequest $request)
     {
         $id = Auth::user()->id;
-        $profile = ProfileEmployer::where('users_id', $id)->first();
+        $profile = ProfileCandidate::where('users_id', $id)->first();
 
         if (!$profile) {
             return redirect()
                 ->route('candidate.profile', $id)
-                ->with('warning', 'Por favor preencha os dados da empresa para poder editar a imagem/logo.');
+                ->with('warning', 'Por favor preencha seus dados pessoais para poder editar sua foto.');
         }
 
-        if ($profile->image) {
+        if (isset($profile->image)) {
             $image_old = $profile->image;
         }
 
@@ -193,7 +202,7 @@ class ProfileController extends Controller
 
             if (!$request->file('image')->storeAs('profile/' . $id, $filename)) {
                 return redirect()
-                    ->route('employer.profile', $id)
+                    ->route('candidate.profile', $id)
                     ->with('warning', 'Algo ocorreu e não foi possível atualizar a imagem. Tente novamente.[Cód. 1]');
             };
 
@@ -202,7 +211,7 @@ class ProfileController extends Controller
             if (!$profile->update($profile_image)) {
                 if (!$request->file('image')->storeAs('profile/' . $id, $filename)) {
                     return redirect()
-                        ->route('employer.profile', $id)
+                        ->route('candidate.profile', $id)
                         ->with('warning', 'Algo ocorreu e não foi possível atualizar a imagem. Tente novamente.[Cód. 2]');
                 };
             }
@@ -214,12 +223,12 @@ class ProfileController extends Controller
             }
 
             return redirect()
-                ->route('employer.profile', $id)
+                ->route('candidate.profile', $id)
                 ->with('message', 'Imagem atualizada com sucesso.');
         }
 
         return redirect()
-            ->route('employer.profile', $id)
+            ->route('candidate.profile', $id)
             ->with('warning', 'Por favor, selecione um arquivo válido');
     }
 
@@ -229,7 +238,7 @@ class ProfileController extends Controller
 
         if (!$request->password === $request->password_confirmation) {
             return redirect()
-                ->route('employer.profile', $user->id)
+                ->route('candidate.profile', $user->id)
                 ->with('warning', 'As senhas digitadas devem ser iguais.');
         };
 
@@ -237,7 +246,7 @@ class ProfileController extends Controller
             'password' => Hash::make($request['password']),
         ])) {
             return redirect()
-                ->route('employer.profile', $user->id)
+                ->route('candidate.profile', $user->id)
                 ->with('message', 'Senha alterada com sucesso.');
         };
     }

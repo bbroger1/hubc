@@ -3,20 +3,11 @@
 namespace App\Http\Controllers\Candidate;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Show the application dashboard.
      *
@@ -24,11 +15,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $type = Auth::user()->type;
-
-        if ($type != 3) {
+        if (Auth::user()->type != 3) {
             return view('auth.login');
         }
+
+        $user = User::find(Auth::user()->id);
+
+        if (!$user->profileCandidate) {
+            session(['name' => $user->name, 'username' => $user->username]);
+            return view('panel.candidate.candidateHome');
+        }
+
+        session(['image' => $user->profileCandidate->image, 'name' => $user->name, 'username' => $user->username]);
 
         return view('panel.candidate.candidateHome');
     }

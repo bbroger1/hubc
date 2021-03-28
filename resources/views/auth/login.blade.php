@@ -24,18 +24,7 @@
         <div class="row justify-content-center form">
             <div class="col-md-6">
                 <h3 class="text-center"><b class="text-red">Conecte-se para continuar</b></h3>
-                @if (isset($message))
-                    {{ $message }}
-                @endif
-                @if ($errors->any())
-                    <div class="alert alert-warning text-center">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+                @include('layouts.partials.alerts')
                 <div class="mt-5 mb-2">
                     <a href="{{ route('login.linkedin', 'linkedin') }}" title="" class="btn btn-register linkedin">
                         <i class="fab fa-linkedin-in"></i>

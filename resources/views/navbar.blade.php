@@ -33,6 +33,18 @@
                     @endphp
                     <img class='rounded-circle' src='{{ url('storage/profile/' . Auth::user()->id . "/{$image}") }}'
                         width='20' height='20'>
+                @elseif (isset($user->profileEmployer->image))
+                    <img class='rounded-circle'
+                        src='{{ url('storage/profile/' . Auth::user()->id . "/{$user->profileEmployer->image}") }}'
+                        width='20' height='20'>
+                @elseif (isset($user->profileCandidate->image))
+                    <img class='rounded-circle'
+                        src='{{ url('storage/profile/' . Auth::user()->id . "/{$user->profileCandidate->image}") }}'
+                        width='20' height='20'>
+                @elseif (isset($user->profileAdm->image))
+                    <img class='rounded-circle'
+                        src='{{ url('storage/profile/' . Auth::user()->id . "/{$user->profileAdm->image}") }}'
+                        width='20' height='20'>
                 @else
                     <img class='rounded-circle' src="{{ url('images/profile_basic.png') }}" width='20' height='20'>
                 @endif
@@ -51,7 +63,7 @@
                             {{ __('Perfil') }}
                         </a>
                     @elseif(Auth::user()->type === 3)
-                        <a href="#" class="dropdown-item">
+                        <a href="{{ route('candidate.profile', Auth::user()->id) }}" class="dropdown-item">
                             <i class="fa fa-user fa-fw"></i>
                             {{ __('Perfil') }}
                         </a>
